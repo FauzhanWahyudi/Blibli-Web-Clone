@@ -1,16 +1,9 @@
 import { db } from "@/db";
 import { comparePassword, hashPassword } from "@/helpers/hash";
 import { signToken } from "@/helpers/jwt";
-import { ILogin, IUser } from "@/interaces/user";
+import { ILogin, IUser } from "@/interfaces/user";
 import { ObjectId } from "mongodb";
-import { string, z } from "zod";
 
-const UserSchema = z.object({
-  name: z.string(),
-  username: z.string(),
-  email: z.string().email(),
-  password: z.string().min(5),
-});
 class User {
   static collection = db.collection("users");
 
@@ -50,16 +43,15 @@ class User {
     }
   }
 
-  static async addUser(body: IUser) {
+  static async register(body: IUser) {
     try {
-      //Validation input with zod
-      UserSchema.parse(body);
       const newUser = {
         ...body,
         password: hashPassword(body.password),
       };
       await User.collection.insertOne(newUser);
-      return { newUser };
+      const { _id, name, username, email } = newUser;
+      return { _id, name, username, email };
     } catch (error) {
       console.log("🚀 ~ User ~ addUser ~ error:", error);
       throw error;

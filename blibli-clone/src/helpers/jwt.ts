@@ -1,4 +1,4 @@
-import { IJwtSignInput } from "@/interaces/jwt";
+import { IJwtSignInput } from "@/interfaces/jwt";
 import jwt from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET as string;
