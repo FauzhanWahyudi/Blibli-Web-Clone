@@ -13,4 +13,4 @@ export const client = new MongoClient(uri, {
   },
 });
 
-export const db = client.db("youtube_clone");
+export const db = client.db("Blibli_clone");
