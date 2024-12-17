@@ -23,12 +23,12 @@ import Link from "next/link";
 
 export default function LoginPage() {
   type formSchema = {
-    username: string;
+    email: string;
     password: string;
   };
   const form = useForm<formSchema>({
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -36,47 +36,57 @@ export default function LoginPage() {
   async function onSubmit(values: formSchema) {
     try {
       console.log(values);
-      throw new Error("username is required");
+      if (!values.email) throw "MissingEmail";
+      if (!values.password) throw "MissingPassword";
     } catch (error) {
       console.log("🚀 ~ onSubmit ~ error:", error);
-      form.setError("username", {
-        type: "manual",
-        message: "Email already exists",
-      });
+      if (error === "MissingEmail") {
+        form.setError("email", {
+          type: "manual",
+          message: "email is required",
+        });
+      }
+      if (error === "MissingPassword") {
+        form.setError("password", {
+          type: "manual",
+          message: "password is required",
+        });
+      }
     }
   }
   return (
     <div
-      className="flex h-screen overflow-hidden justify-center items-center"
+      className="flex h-screen items-center justify-center overflow-hidden"
       style={{
         backgroundPosition: "center",
         backgroundImage: `url(https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/test-discovery/2023/11/02/450d27ed-176f-46ef-990c-47dbad45ecdc-1698921295586-bd7caf8e1f80aac50bb60c7c6ea74244.png)`,
       }}
     >
-      <div className="w-4/6 flex justify-end">
-        <div className="w-3/6 h-full">
-          <Card className="flex flex-col h-[60vh] justify-between">
+      <div className="flex w-4/6 justify-end">
+        <div className="h-full w-3/6">
+          <Card className="flex h-[60vh] flex-col justify-between">
             <div>
               <CardHeader>
-                <CardTitle className="text-3xl">LOGIN</CardTitle>
+                <CardTitle className="text-3xl">Login</CardTitle>
               </CardHeader>
               <CardContent>
                 <div>
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(onSubmit)}
-                      className="space-y-8"
+                      className="space-y-4"
                     >
                       <FormField
                         control={form.control}
-                        name="username"
+                        name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone Number / Email</FormLabel>
+                            <FormLabel>Email</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="Phone Number or Email"
+                                placeholder="Email"
                                 {...field}
+                                className="h-12"
                               />
                             </FormControl>
                             <FormMessage />
@@ -92,54 +102,57 @@ export default function LoginPage() {
                             <FormControl>
                               <Input
                                 placeholder="password"
+                                type="password"
                                 {...field}
-                                onChange={(e) => {
-                                  field.onChange(e); // Keeps react-hook-form working
-                                  console.log(
-                                    "Custom onChange:",
-                                    e.target.value
-                                  );
-                                }}
+                                // onChange={(e) => {
+                                //   field.onChange(e); // Keeps react-hook-form working
+                                //   console.log(
+                                //     "Custom onChange:",
+                                //     e.target.value,
+                                //   );
+                                // }}
+                                className="h-12"
                               />
                             </FormControl>
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
-                      <Button type="submit" className="w-full ">
+                      <Button type="submit" className="w-full">
                         Login
                       </Button>
                     </form>
                   </Form>
                 </div>
-                <div className="flex justify-center items-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   <Separator className="my-4 w-2/6" />
                   <p>Faster login with SSO</p>
                   <Separator className="my-4 w-2/6" />
                 </div>
-                <div className="my-2 flex flex-row justify-center gap-9 w-full">
-                  <button className="bg-transparent hover:bg-transparent hover:scale-125">
-                    <FaApple className="text-gray-800 text-5xl" />
+                <div className="my-2 flex w-full flex-row justify-center gap-9">
+                  <button className="bg-transparent hover:scale-125 hover:bg-transparent">
+                    <FaApple className="text-5xl text-gray-800" />
                   </button>
-                  <button className="bg-transparent hover:bg-transparent hover:scale-125">
-                    <FaFacebook className="text-blue-600 text-5xl" />
+                  <button className="bg-transparent hover:scale-125 hover:bg-transparent">
+                    <FaFacebook className="text-5xl text-blue-600" />
                   </button>
-                  <button className="bg-gradient-to-tr from-emerald-200 to-indigo-400 p-2 hover:scale-125 rounded-full">
-                    <FaGoogle className="text-white text-4xl" />
+                  <button className="rounded-full bg-gradient-to-tr from-emerald-200 to-indigo-400 p-2 hover:scale-125">
+                    <FaGoogle className="text-4xl text-white" />
                   </button>
                 </div>
               </CardContent>
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex items-center justify-center gap-2">
                 <p>Don`t have account ? </p>
                 <Link
                   href={"/register"}
-                  className="text-blue-500 hover:text-blue-800 hover:font-bold"
+                  className="text-blue-500 hover:font-bold hover:text-blue-800"
                 >
                   Register First !
                 </Link>
               </div>
             </div>
             <CardFooter>
-              <p className="text-sm text-center uppercase w-full">
+              <p className="w-full text-center text-sm uppercase">
                 blibli ticket All Rights Reversed
               </p>
             </CardFooter>
