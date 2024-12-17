@@ -1,9 +1,9 @@
 import { ObjectId } from "mongodb";
 
-export interface IUser {
+export interface IWishList {
   _id?: ObjectId;
   userId: ObjectId;
   productId: ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

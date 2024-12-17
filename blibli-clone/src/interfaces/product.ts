@@ -10,6 +10,6 @@ export interface IProduct {
   tags: string[];
   thumbnail: string;
   images: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
