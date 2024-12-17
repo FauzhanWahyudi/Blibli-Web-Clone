@@ -6,9 +6,12 @@ export default function Home() {
       <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
         <div className="card bg-base-100 w-96 shadow-xl">
           <figure>
-            <img
+            <Image
               src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+              width={300}
+              height={300}
               alt="Shoes"
+              className="w-full"
             />
           </figure>
           <div className="card-body">
