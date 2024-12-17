@@ -1,5 +1,5 @@
 // path: /api
-//location: /src/app/api/users/route.ts
+//location: /src/app/api/route.ts
 
 import { NextResponse } from "next/server";
 

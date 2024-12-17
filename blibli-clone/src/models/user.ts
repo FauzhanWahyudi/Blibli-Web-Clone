@@ -23,7 +23,7 @@ class User {
     }
   }
 
-  static async findById(_id: ObjectId) {
+  static async findById(_id: string) {
     try {
       return await User.collection.findOne({ _id: new ObjectId(_id) });
     } catch (error) {

@@ -1,4 +1,4 @@
-// path: /api
+// path: /api/users
 //location: /src/app/api/users/route.ts
 
 import User from "@/models/user";
