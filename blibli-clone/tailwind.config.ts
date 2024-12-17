@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
-import * as daisyui from "daisyui";
+import daisyui from "daisyui";
 const config: Config = {
   darkMode: ["class"],
   content: [
