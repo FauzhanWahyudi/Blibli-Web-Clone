@@ -7,7 +7,7 @@ export default function Carousel() {
     "https://www.static-src.com/siva/asset/12_2024/teman-tanggal-tua_DESKTOP_181224_41D.jpg?w=1200",
   ];
   return (
-    <div className="carousel w-full bg-emerald-600 bg-opacity-35">
+    <div className="carousel w-full">
       {links.map((link, index) => (
         <div
           key={index}
