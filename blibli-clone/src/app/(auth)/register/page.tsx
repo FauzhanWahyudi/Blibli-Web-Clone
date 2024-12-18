@@ -17,47 +17,75 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { FaFacebook, FaApple, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
+import { UserSchema } from "@/schemas/user";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { IUser } from "@/interfaces/user";
+import Swal from "sweetalert2";
 
 export default function RegisterPage() {
-  type formSchema = {
-    fullName: string;
-    email: string;
-    phone: string;
-    password: string;
-  };
-  const form = useForm<formSchema>({
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof UserSchema>>({
+    resolver: zodResolver(UserSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
+      username: "",
       email: "",
       password: "",
       phone: "",
     },
   });
 
-  async function onSubmit(values: formSchema) {
-    try {
-      console.log(values);
-      // if (!values.email) throw "MissingEmail";
-      // if (!values.password) throw "MissingPassword";
-    } catch (error) {
-      console.log("🚀 ~ onSubmit ~ error:", error);
-      //   if (error === "MissingEmail") {
-      //     form.setError("email", {
-      //       type: "manual",
-      //       message: "email is required",
-      //     });
-      //   }
-      //   if (error === "MissingPassword") {
-      //     form.setError("password", {
-      //       type: "manual",
-      //       message: "password is required",
-      //     });
-      //   }
+  async function onSubmit(values: z.infer<typeof UserSchema>) {
+    // console.log(values);
+
+    const response = await fetch("/api/users/register", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = (await response.json()) as {
+      message?: string;
+      user?: IUser;
+    };
+
+    if (!response.ok) {
+      //by doing this every time we got error, alert will be shown
+      Swal.fire({
+        title: "Error!",
+        text: data.message,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      //by do this it will redirect to error query link
+      // router.push(`/register?error=${data.message}`);
+    } else {
+      router.push("/login");
     }
   }
+
+  //______can do this if you want to use redirect the page to error params_______________ (can be a client component)
+  // const searchParams = useSearchParams();
+  // const error = searchParams.get("error");
+  // useEffect(() => {
+  //   if (error) {
+  //     Swal.fire({
+  //       title: "Error!",
+  //       text: error,
+  //       icon: "error",
+  //       showConfirmButton: false,
+  //       timer: 2500,
+  //     });
+  //   }
+  // }, [searchParams]);
+
   return (
     <div
       className="flex h-screen items-center justify-center overflow-hidden"
@@ -68,7 +96,7 @@ export default function RegisterPage() {
     >
       <div className="flex w-4/6 justify-end">
         <div className="h-full w-3/6">
-          <Card className="flex h-[60vh] flex-col justify-between">
+          <Card className="flex flex-col justify-between">
             <div>
               <CardHeader>
                 <CardTitle className="text-3xl">Register</CardTitle>
@@ -82,13 +110,30 @@ export default function RegisterPage() {
                     >
                       <FormField
                         control={form.control}
-                        name="fullName"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Full Name</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="Full Name*"
+                                placeholder="Name*"
+                                {...field}
+                                className="h-10"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Username*"
                                 {...field}
                                 className="h-10"
                               />
@@ -105,7 +150,7 @@ export default function RegisterPage() {
                             <FormLabel>Email</FormLabel>
                             <FormControl className="mt-0">
                               <Input
-                                placeholder="Email"
+                                placeholder="Email*"
                                 {...field}
                                 className="h-10"
                               />

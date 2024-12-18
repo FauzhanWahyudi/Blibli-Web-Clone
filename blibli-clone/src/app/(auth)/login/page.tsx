@@ -20,38 +20,24 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { FaFacebook, FaApple, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
+import { LoginSchema } from "@/schemas/user";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginPage() {
-  type formSchema = {
-    email: string;
-    password: string;
-  };
-  const form = useForm<formSchema>({
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: formSchema) {
+  async function onSubmit(values: z.infer<typeof LoginSchema>) {
     try {
       console.log(values);
-      if (!values.email) throw "MissingEmail";
-      if (!values.password) throw "MissingPassword";
     } catch (error) {
       console.log("🚀 ~ onSubmit ~ error:", error);
-      if (error === "MissingEmail") {
-        form.setError("email", {
-          type: "manual",
-          message: "email is required",
-        });
-      }
-      if (error === "MissingPassword") {
-        form.setError("password", {
-          type: "manual",
-          message: "password is required",
-        });
-      }
     }
   }
   return (
@@ -104,13 +90,6 @@ export default function LoginPage() {
                                 placeholder="password"
                                 type="password"
                                 {...field}
-                                // onChange={(e) => {
-                                //   field.onChange(e); // Keeps react-hook-form working
-                                //   console.log(
-                                //     "Custom onChange:",
-                                //     e.target.value,
-                                //   );
-                                // }}
                                 className="h-12"
                               />
                             </FormControl>
