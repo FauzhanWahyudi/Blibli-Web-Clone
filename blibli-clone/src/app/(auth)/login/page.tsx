@@ -23,8 +23,12 @@ import Link from "next/link";
 import { LoginSchema } from "@/schemas/user";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -34,10 +38,29 @@ export default function LoginPage() {
   });
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
-    try {
-      console.log(values);
-    } catch (error) {
-      console.log("🚀 ~ onSubmit ~ error:", error);
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = (await response.json()) as {
+      message?: string;
+      access_token?: string;
+    };
+
+    if (!response.ok) {
+      Swal.fire({
+        title: "Error!",
+        text: data.message,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+    } else {
+      console.log("aaaaaaaaa", data);
+      router.push("/");
     }
   }
   return (

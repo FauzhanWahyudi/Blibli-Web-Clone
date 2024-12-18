@@ -64,6 +64,7 @@ export default function RegisterPage() {
         showConfirmButton: false,
         timer: 2500,
       });
+      return;
       //by do this it will redirect to error query link
       // router.push(`/register?error=${data.message}`);
     } else {
@@ -201,7 +202,7 @@ export default function RegisterPage() {
                   </Form>
                 </div>
               </CardContent>
-              <div className="flex items-center justify-center gap-2">
+              <div className="mb-5 flex items-center justify-center gap-2">
                 <p>Already have account ? </p>
                 <Link
                   href={"/login"}

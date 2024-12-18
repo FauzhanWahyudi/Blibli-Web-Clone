@@ -1,4 +1,5 @@
 import { db } from "@/db";
+import { HttpError } from "@/helpers/error";
 import { comparePassword, hashPassword } from "@/helpers/hash";
 import { signToken } from "@/helpers/jwt";
 import { ILogin, IUser } from "@/interfaces/user";
@@ -64,17 +65,17 @@ class User {
       const user = await User.collection.findOne({ email });
 
       if (!user) {
-        throw new Error("Invalid username/password");
+        throw new HttpError("Invalid username/password", 401);
       }
       const isValidatePassword = comparePassword(password, user.password);
       if (!isValidatePassword) {
-        throw new Error("Invalid username/password");
+        throw new HttpError("Invalid username/password", 401);
       }
       const access_token = signToken({
         _id: user._id,
         email: user.email,
       });
-      return { access_token, user };
+      return { access_token };
     } catch (error) {
       console.log("🚀 ~ User ~ login ~ error:", error);
       throw error;
