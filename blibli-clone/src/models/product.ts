@@ -45,17 +45,14 @@ export default class Product {
       const product = await Product.collection
         .aggregate([
           { $match: { slug } },
-          //   {
-          //     $lookup: {
-          //       from: "wishlist",
-          //       localField: "_id",
-          //       foreignField: "productId",
-          //       as: "wishlist",
-          //     },
-          //   },
-          //   {
-          //     $unwind: { path: "$wishlist" },
-          //   },
+          {
+            $lookup: {
+              from: "wishlist",
+              localField: "_id",
+              foreignField: "productId",
+              as: "wishlist",
+            },
+          },
         ])
         .toArray();
       return product[0];
