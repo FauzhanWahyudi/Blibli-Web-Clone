@@ -21,28 +21,42 @@ export default class WishList {
   }
 
   static async getWishList(userId: ObjectId) {
-    return await WishList.collection
-      .aggregate([
-        { $match: { userId } },
-        {
-          $lookup: {
-            from: "products",
-            localField: "productId",
-            foreignField: "_id",
-            as: "product",
+    try {
+      return await WishList.collection
+        .aggregate([
+          { $match: { userId } },
+          {
+            $lookup: {
+              from: "products",
+              localField: "productId",
+              foreignField: "_id",
+              as: "product",
+            },
           },
-        },
-        {
-          $unwind: {
-            path: "$product",
+          {
+            $unwind: {
+              path: "$product",
+            },
           },
-        },
-        {
-          $sort: {
-            createdAt: -1,
+          {
+            $sort: {
+              createdAt: -1,
+            },
           },
-        },
-      ])
-      .toArray();
+        ])
+        .toArray();
+    } catch (error) {
+      console.log("🚀 ~ WishList ~ getWishList ~ error:", error);
+      throw error;
+    }
+  }
+
+  static async remove(id: string) {
+    try {
+      return await WishList.collection.deleteOne({ _id: new ObjectId(id) });
+    } catch (error) {
+      console.log("🚀 ~ WishList ~ remove ~ error:", error);
+      throw error;
+    }
   }
 }
