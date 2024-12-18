@@ -1,4 +1,3 @@
-import errorHandler, { HttpError } from "@/helpers/error";
 import User from "@/models/user";
 import { headers } from "next/headers";
 import Link from "next/link";
