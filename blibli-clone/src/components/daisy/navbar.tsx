@@ -10,9 +10,9 @@ export default function Navbar() {
   return (
     <div className="navbar gap-5 bg-base-100">
       <div className="flex-shrink">
-        <div tabIndex={0} className="h-full">
+        <Link href={"/"} tabIndex={0} className="h-full">
           <Image src={bliLogo} alt="bli-bli logo" />
-        </div>
+        </Link>
       </div>
       <div className="flex-grow">
         <div className="w-full">
@@ -76,7 +76,7 @@ export default function Navbar() {
             >
               <button
                 type="submit"
-                className="btn-error btn h-8 min-h-0 w-20 rounded-full p-0 uppercase text-white"
+                className="btn btn-error h-8 min-h-0 w-20 rounded-full p-0 uppercase text-white"
               >
                 logout
               </button>

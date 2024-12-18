@@ -1,12 +1,15 @@
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import bliLogo from "@/assets/logo-blibli-blue.0f340eba.svg";
+import Link from "next/link";
 
 export default function Footer() {
   return (
     <footer className="footer p-10 text-base-content">
       <aside>
-        <Image src={bliLogo} alt="bli-bli logo" />
+        <Link href={"/"}>
+          <Image src={bliLogo} alt="bli-bli logo" />
+        </Link>
         <p>Toko online dengan sensasi belanja ala mall.</p>
         <Separator />
         <div className="w-64">
