@@ -1,3 +1,4 @@
+import { JWSInvalid } from "jose/errors";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
@@ -29,6 +30,9 @@ export default function errorHandler(error: unknown) {
     );
   }
 
+  if (error instanceof JWSInvalid) {
+    return NextResponse.json({ message: "Invalid Token" }, { status: 401 });
+  }
   return NextResponse.json(
     { message: "Internal Server Error" },
     { status: 500 },
