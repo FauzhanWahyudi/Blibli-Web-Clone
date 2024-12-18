@@ -25,6 +25,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { revalidateByPath } from "@/actions/cache";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -60,6 +61,7 @@ export default function LoginPage() {
       });
     } else {
       console.log("aaaaaaaaa", data);
+      await revalidateByPath("/");
       router.push("/");
     }
   }
@@ -73,7 +75,7 @@ export default function LoginPage() {
     >
       <div className="flex w-4/6 justify-end">
         <div className="h-full w-3/6">
-          <Card className="flex h-[60vh] flex-col justify-between">
+          <Card className="flex flex-col justify-between">
             <div>
               <CardHeader>
                 <CardTitle className="text-3xl">Login</CardTitle>
