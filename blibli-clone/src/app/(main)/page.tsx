@@ -1,74 +1,54 @@
 import Image from "next/image";
+import ProductCard from "@/components/daisy/productCard";
+import Product from "@/models/product";
+import bliLogo from "@/assets/logo-blibli-blue.0f340eba.svg";
+import Carousel from "@/components/daisy/carousel";
 
-export default function Home() {
+export default async function Home() {
+  const products = await Product.findAll();
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
-        <div className="card bg-base-100 w-96 shadow-xl">
-          <figure>
-            <Image
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-              width={300}
-              height={300}
-              alt="Shoes"
-              className="w-full"
-            />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
+    <div className="flex-1">
+      <Carousel />
+      <main className="my-16 flex flex-wrap items-center gap-7 sm:items-start">
+        {products.length &&
+          products.length > 0 &&
+          products.map((product, index) => {
+            return <ProductCard product={product} key={index} />;
+          })}
       </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      <footer className="footer p-10 text-base-content">
+        <aside>
+          <Image src={bliLogo} alt="bli-bli logo" />
+          <p>Toko online dengan sensasi belanja ala mall.</p>
+        </aside>
+        <nav>
+          <h6 className="footer-title">Services</h6>
+          <a className="link-hover link">
+            Telepon <br />
+            <span className="text-lg font-bold">0804-1-871-871</span>
+          </a>
+          <a className="link-hover link">
+            Email <br />
+            <span className="text-lg font-bold">customer.care@blibli.com</span>
+          </a>
+          <a className="link-hover link">
+            Halaman Bantuan <br />
+            <span className="text-lg font-bold text-blue-400">BlibliCarem</span>
+          </a>
+        </nav>
+        <nav>
+          <h6 className="footer-title">Company</h6>
+          <a className="link-hover link">About us</a>
+          <a className="link-hover link">Blog Blibli Friends</a>
+          <a className="link-hover link">News</a>
+          <a className="link-hover link">Jobs</a>
+        </nav>
+        <nav>
+          <h6 className="footer-title">Partnership</h6>
+          <a className="link-hover link"> Affiliate Program</a>
+          <a className="link-hover link">Sell at Blibli</a>
+          <a className="link-hover link">B2B Program</a>
+        </nav>
       </footer>
     </div>
   );

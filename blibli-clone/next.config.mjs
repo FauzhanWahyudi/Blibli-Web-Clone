@@ -9,6 +9,13 @@ const nextConfig = {
         pathname: "/images/stock/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "loremflickr.com",
+        port: "",
+        pathname: "/**",
+        search: "",
+      },
     ],
   },
 };

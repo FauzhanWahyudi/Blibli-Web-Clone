@@ -6,7 +6,7 @@ import { ILogin, IUser } from "@/interfaces/user";
 import { ObjectId } from "mongodb";
 
 class User {
-  static collection = db.collection("users");
+  static collection = db.collection<IUser>("users");
 
   static async findAll() {
     try {
