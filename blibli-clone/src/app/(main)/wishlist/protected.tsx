@@ -4,15 +4,15 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 export default async function Protected({ children }: { children: ReactNode }) {
+  "use server";
   let isUserValid: boolean = true;
   const userId = headers().get("x-user-id") as string;
-  console.log("userId", userId);
+  console.log("🚀 ~ Protected ~ userId:", userId);
   const user = await User.findById(userId);
   if (!user) {
     // throw new HttpError("Invalid Token", 401);
     isUserValid = false;
   }
-  console.log("user", user);
   return (
     <>
       {isUserValid ? (

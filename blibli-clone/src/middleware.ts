@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import errorHandler, { HttpError } from "./helpers/error";
 import { joseVerify } from "./helpers/jwt";
-import User from "./models/user";
+// import User from "./models/user";
 // import { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
@@ -37,15 +37,21 @@ export default async function middleware(request: NextRequest) {
         headers: requestHeaders,
       },
     });
-    // console.log(response);
+    // request.cookies.set("userId", payload._id);
     return response;
   } catch (error) {
     console.log("🚀 ~ middleware ~ error:", error);
-    errorHandler(error);
+    if (request.nextUrl.pathname.includes("/api")) {
+      return errorHandler(error);
+    }
+    // else {
+    // return NextResponse.redirect(new URL("/login", request.url));
+    // NextResponse.next();
+    // }
   }
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/wishlist/:path"],
+  matcher: ["/api/wishlist/:path*", "/wishlist/:path*"],
 };
