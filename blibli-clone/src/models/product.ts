@@ -12,12 +12,13 @@ export default class Product {
     return products;
   }
 
-  static async findAll(search?: string, limit?: number, page?: number) {
+  static async findAll(search?: string, page?: number, limit?: number) {
     try {
       search = search ? search : "";
-      const currLimit = limit ? limit : 10;
-      const currPage = page && page > 1 ? page - 1 : 0;
-      const offset = currLimit * currPage;
+      limit = limit ? limit : 10;
+      page = page && page > 1 ? page - 1 : 0;
+      console.log(page, limit);
+      const offset = limit * page;
       const products = await Product.collection
         .find({
           $or: [

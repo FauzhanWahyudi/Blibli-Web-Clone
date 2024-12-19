@@ -11,7 +11,11 @@ export async function GET(request: NextRequest) {
   console.log("🚀 ~ GET ~ limit:", limit);
   // console.log("🚀 ~ GET ~ search:", search);
   try {
-    const { products } = await Product.findAll(search);
+    const { products } = await Product.findAll(
+      search,
+      Number(page),
+      Number(limit),
+    );
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     console.log("🚀 ~ GET ~ error:", error);

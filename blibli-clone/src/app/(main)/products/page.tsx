@@ -1,5 +1,6 @@
 "use client";
 import ProductCard from "@/components/daisy/productCard";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { IProduct } from "@/interfaces/product";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,18 +16,30 @@ export default function ProductsPage() {
   const fetchProducts = async (search: string, pageNum: number) => {
     search = search ? encodeURIComponent(search) : "";
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/products?search=${search}&page=${pageNum}&limit=10`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/products?search=${search}&page=${pageNum}&limit=5`,
       {
         method: "GET",
       },
     );
     const { products } = (await response.json()) as { products: IProduct[] };
-    // console.log(products);
+    console.log(products);
     if (products.length === 1) {
       setHasMore(false);
     }
-    setProducts(products);
+    if (products.length === 0) {
+      // no data fetched
+      setHasMore(false);
+    } else {
+      setTimeout(() => {
+        // concat new with previous data
+        setProducts((prevProducts) =>
+          pageNum === 1 ? products : [...prevProducts, ...products],
+        );
+        setPage((prevPage) => prevPage + 1);
+      }, 500);
+    }
     setIsSearching(false);
+    // return products;
   };
 
   useEffect(() => {
@@ -46,18 +59,39 @@ export default function ProductsPage() {
     return () => clearTimeout(delayDebounce);
   }, [search]);
   return (
-    <div className="my-16 flex flex-wrap items-center justify-evenly gap-x-3 gap-y-8 sm:items-start">
-      {isSearching && (
-        <div className="flex w-full flex-col items-center">
+    <>
+      {isSearching ? (
+        <div className="flex h-screen w-full flex-col items-center justify-start">
           <p className="loading loading-dots loading-lg"></p>
           <h1 className="text-center text-lg">...Searching</h1>
         </div>
+      ) : (
+        <InfiniteScroll
+          dataLength={products.length} //This is important field to render the next data
+          next={() => fetchProducts(search, page)}
+          hasMore={hasMore}
+          loader={
+            <h4 className="my-8 text-center text-lg">
+              <span className="loading loading-dots loading-lg"></span>
+              <br />
+              Loading...
+            </h4>
+          }
+          endMessage={
+            <p className="my-8 text-center">
+              <b>No more data to load</b>
+            </p>
+          }
+        >
+          <div className="flex flex-wrap items-center justify-evenly gap-x-3 gap-y-8 py-14 sm:items-start">
+            {products.map((product) => {
+              return (
+                <ProductCard product={product} key={String(product._id)} />
+              );
+            })}
+          </div>
+        </InfiniteScroll>
       )}
-      {!isSearching &&
-        products.length > 0 &&
-        products.map((product) => {
-          return <ProductCard product={product} key={String(product._id)} />;
-        })}
-    </div>
+    </>
   );
 }
