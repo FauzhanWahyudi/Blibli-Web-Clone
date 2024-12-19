@@ -5,9 +5,32 @@ import timeSince from "@/helpers/timeSince";
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeart } from "react-icons/fa6";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface ProductDetailSlug {
   params: { slug: string };
+}
+
+export async function generateMetadata(
+  { params }: ProductDetailSlug,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // read route params
+  const { slug } = params;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/detail/${slug}`,
+    {
+      method: "GET",
+    },
+  );
+  const product = (await response.json()) as IProduct;
+  return {
+    title: "BliBli Clone - " + product.name,
+    description: product.description,
+    openGraph: {
+      images: [product.thumbnail],
+    },
+  };
 }
 
 export default async function ProductDetailPage({ params }: ProductDetailSlug) {

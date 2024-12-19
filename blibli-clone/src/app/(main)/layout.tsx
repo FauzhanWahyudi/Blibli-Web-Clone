@@ -2,6 +2,7 @@ import Footer from "@/components/daisy/footer";
 import MiniNavbar from "@/components/daisy/miniNavbar";
 import Navbar from "@/components/daisy/navbar";
 import type { Metadata } from "next";
+
 export const metadata: Metadata = {
   title: "BliBli Clone",
   description: "Blibli by fauzhan wahyudi",

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import SearchBar from "./search";
-export default function Navbar(request: NextRequest) {
+export default function Navbar() {
   const authCookies = cookies().get("Authorization");
   // console.log("🚀 ~ Navbar ~ authCookies:", authCookies);
 
