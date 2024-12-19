@@ -6,6 +6,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaDeleteLeft } from "react-icons/fa6";
 import Swal from "sweetalert2";
+
+export const swalWithDaisyButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "ml-4 btn btn-error",
+  },
+  buttonsStyling: false,
+});
+
 export default function WishList() {
   const [wishlist, setWishList] = useState<IWishList[]>([]);
   const fetchWishList = async () => {
@@ -19,13 +28,7 @@ export default function WishList() {
   useEffect(() => {
     fetchWishList();
   }, []);
-  const swalWithDaisyButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "ml-4 btn btn-error",
-    },
-    buttonsStyling: false,
-  });
+
   const deleteWish = async (id: string) => {
     swalWithDaisyButtons
       .fire({
