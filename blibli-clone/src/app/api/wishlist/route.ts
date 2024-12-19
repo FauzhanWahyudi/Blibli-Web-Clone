@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     const wish = await WishList.findWish(userId, productId);
     if (wish) {
-      console.log("🚀 ~ POST ~ wish:", wish);
+      // console.log("🚀 ~ POST ~ wish:", wish);
       throw new HttpError("Wish already registered", 422);
     }
 
@@ -40,5 +40,3 @@ export async function POST(request: NextRequest) {
     return errorHandler(error);
   }
 }
-
-

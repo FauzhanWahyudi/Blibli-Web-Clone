@@ -7,22 +7,31 @@ export function WishButton({ productId }: { productId: string }) {
   const router = useRouter();
   const wishAdder = async () => {
     console.log("productId", productId);
-    await fetch("/api/wishlist", {
+    const response = await fetch("/api/wishlist", {
       method: "POST",
       body: JSON.stringify({ productId }),
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then(() => {
-        swalWithDaisyButtons.fire({
-          title: "Success!",
-          text: "Your wish added.",
-          icon: "success",
-        });
-        router.push("/wishlist");
-      })
-      .catch(console.log);
+    });
+    const responseJson = await response.json();
+
+    // console.log("response", response);
+    // console.log("responseJson", responseJson);
+    if (!response.ok) {
+      return swalWithDaisyButtons.fire({
+        title: "Error!",
+        text: responseJson.message,
+        icon: "error",
+      });
+    }
+    swalWithDaisyButtons.fire({
+      title: "Success!",
+      text: "Your wish added.",
+      icon: "success",
+    });
+    // console.log(response);
+    router.push("/wishlist");
   };
   return (
     <button onClick={wishAdder}>

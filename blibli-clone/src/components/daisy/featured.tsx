@@ -2,9 +2,16 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Product from "@/models/product";
 import ProductCard from "./productCard";
 import Link from "next/link";
+import { IProduct } from "@/interfaces/product";
 
 export default async function FeaturedProduct() {
-  const products = (await Product.dummyFindAll()).slice(0, 10);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/products?limit=8`,
+    {
+      method: "GET",
+    },
+  );
+  const { products } = (await response.json()) as { products: IProduct[] };
   return (
     <div className="flex flex-col justify-between pb-0 pt-5">
       <div className="flex w-full justify-between px-3">

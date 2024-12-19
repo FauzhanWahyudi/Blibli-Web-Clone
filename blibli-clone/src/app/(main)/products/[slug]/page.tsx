@@ -1,8 +1,10 @@
 import { WishButton } from "@/components/daisy/wishButton";
 import { rupiah } from "@/helpers/rupiah";
 import { IProduct } from "@/interfaces/product";
+import timeSince from "@/helpers/timeSince";
 import Image from "next/image";
 import Link from "next/link";
+import { FaHeart } from "react-icons/fa6";
 
 interface ProductDetailSlug {
   params: { slug: string };
@@ -18,7 +20,7 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
     },
   );
   const product = (await response.json()) as IProduct;
-  console.log(product);
+  // console.log(product.wishlist);
   return (
     <div>
       <div className="breadcrumbs w-full text-sm">
@@ -48,6 +50,8 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
           <p>{product.description}</p>
           <br />
           <p>{product.tags}</p>
+          <br />
+          <p>{timeSince(product.createdAt?.toString() as string)}</p>
         </div>
       </main>
       <aside className="relative bottom-0 mt-4 w-full">
@@ -79,7 +83,14 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
               <button className="btn btn-primary rounded-full">
                 Add to Cart
               </button>
-              <WishButton productId={String(product._id)} />
+              {product.wishlist && product.wishlist.length > 0 ? (
+                <Link href={"/wishlist"}>
+                  <FaHeart className="text-3xl text-red-700" />
+                </Link>
+              ) : (
+                <WishButton productId={String(product._id)} />
+              )}
+              {/* <WishButton productId={String(product._id)} /> */}
             </div>
           </div>
         </div>

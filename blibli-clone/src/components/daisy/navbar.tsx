@@ -21,9 +21,9 @@ export default function Navbar(request: NextRequest) {
         <SearchBar />
       </div>
       <div className="flex flex-shrink">
-        <button className="btn btn-circle btn-ghost">
+        <Link href={"/wishlist"} className="btn btn-circle btn-ghost">
           <FaCartShopping />
-        </button>
+        </Link>
         <div className="divider divider-horizontal"></div>
         {!authCookies && (
           <>

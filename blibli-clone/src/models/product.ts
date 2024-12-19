@@ -20,16 +20,54 @@ export default class Product {
       console.log(page, limit);
       const offset = limit * page;
       const products = await Product.collection
-        .find({
-          $or: [
-            { name: { $regex: search } },
-            { description: { $regex: search } },
-          ],
-        })
-        .limit(limit || 5)
-        .skip(offset)
-        .sort({ createdAt: -1 })
+        .aggregate([
+          {
+            $match: {
+              $or: [
+                {
+                  name: {
+                    $regex: search,
+                  },
+                },
+                {
+                  description: {
+                    $regex: search,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $lookup: {
+              from: "wishlist",
+              localField: "_id",
+              foreignField: "productId",
+              as: "wishlist",
+            },
+          },
+
+          {
+            $limit: limit,
+          },
+          {
+            $skip: offset,
+          },
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+        ])
         .toArray();
+      // .find({
+      //   $or: [
+      //     { name: { $regex: search } },
+      //     { description: { $regex: search } },
+      //   ],
+      // })
+      // .limit(limit || 5)
+      // .skip(offset)
+      // .sort({ createdAt: -1 })
       return { products, limit, page };
     } catch (error) {
       console.log("🚀 ~ Product ~ findById ~ error:", error);

@@ -3,8 +3,9 @@ import { IProduct } from "@/interfaces/product";
 import Image from "next/image";
 import Link from "next/link";
 import { WishButton } from "./wishButton";
-
+// import { FaHeart } from "react-icons/fa6";
 export default function ProductCard({ product }: { product: IProduct }) {
+  // console.log(product);
   return (
     <div className="card h-[30rem] w-64 justify-between bg-base-100 shadow-xl">
       <Link href={"/products/" + product.slug}>
@@ -33,7 +34,11 @@ export default function ProductCard({ product }: { product: IProduct }) {
         >
           Product Detail
         </Link>
+        {/* {product.wishlist && product.wishlist.length > 0 ? (
+          <FaHeart className="text-3xl text-red-700" />
+        ) : ( */}
         <WishButton productId={String(product._id)} />
+        {/* )} */}
       </div>
     </div>
   );

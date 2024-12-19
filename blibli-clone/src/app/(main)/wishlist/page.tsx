@@ -1,4 +1,5 @@
 "use client";
+import { revalidateByPath } from "@/actions/cache";
 import { rupiah } from "@/helpers/rupiah";
 import { IWishList } from "@/interfaces/wishlist";
 import Image from "next/image";
@@ -54,6 +55,7 @@ export default function WishList() {
             fetchWishList();
           });
         }
+        revalidateByPath("/products");
       });
   };
   return (
