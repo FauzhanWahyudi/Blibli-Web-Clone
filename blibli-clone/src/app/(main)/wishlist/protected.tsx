@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 export default async function Protected({ children }: { children: ReactNode }) {
   let isUserValid: boolean = true;
   const userId = headers().get("x-user-id") as string;
+  console.log("userId", userId);
   const user = await User.findById(userId);
   if (!user) {
     // throw new HttpError("Invalid Token", 401);
@@ -19,19 +20,18 @@ export default async function Protected({ children }: { children: ReactNode }) {
       ) : (
         <div className="grid h-screen place-content-center bg-white px-4">
           <div className="text-center">
-            <h1 className="text-9xl font-black text-gray-200">401</h1>
+            <h1 className="text-9xl font-black text-red-200">401</h1>
 
-            <p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Uh-oh!
+            <p className="text-2xl font-extrabold tracking-tight text-red-600 sm:text-4xl">
+              Unauthenticated!
             </p>
 
-            <p className="mt-4 text-gray-500">Invalid Error</p>
+            <p className="mt-4 text-gray-500">
+              please login to your account first
+            </p>
 
-            <Link
-              href="/"
-              className="mt-6 inline-block rounded bg-indigo-600 px-5 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring"
-            >
-              Go Back Home
+            <Link href="/login" className="btn btn-outline btn-primary mt-6">
+              Login
             </Link>
           </div>
         </div>

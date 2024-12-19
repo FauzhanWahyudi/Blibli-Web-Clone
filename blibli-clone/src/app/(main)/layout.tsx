@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <div className="flex w-full justify-center">
       <div className="w-4/6">
-        <header>
+        <header className="sticky top-0 z-50 bg-white">
           <MiniNavbar />
           <Navbar />
         </header>

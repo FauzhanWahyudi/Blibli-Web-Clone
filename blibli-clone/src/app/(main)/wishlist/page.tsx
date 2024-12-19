@@ -1,9 +1,8 @@
-import Protected from "./protected";
 
 export default function WishList() {
   return (
-    <Protected>
+    <div>
       <h1>wish</h1>
-    </Protected>
+    </div>
   );
 }

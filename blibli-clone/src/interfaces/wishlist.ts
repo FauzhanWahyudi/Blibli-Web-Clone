@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { IProduct } from "./product";
 
 export interface IWishList {
   _id?: ObjectId;
@@ -6,4 +7,5 @@ export interface IWishList {
   productId: ObjectId;
   createdAt?: string | Date;
   updatedAt?: string | Date;
+  product?: IProduct;
 }

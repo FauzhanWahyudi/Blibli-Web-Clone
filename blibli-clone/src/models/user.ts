@@ -19,7 +19,10 @@ class User {
 
   static async findById(_id: string) {
     try {
-      return await User.collection.findOne({ _id: new ObjectId(_id) });
+      return await User.collection.findOne(
+        { _id: new ObjectId(_id) },
+        { projection: { password: 0 } },
+      );
     } catch (error) {
       console.log("🚀 ~ User ~ findById ~ error:", error);
       throw error;
