@@ -29,18 +29,18 @@ class User {
     }
   }
 
-  static async findByUsername(username: string) {
-    try {
-      return await User.collection.findOne({ username });
-    } catch (error) {
-      console.log("🚀 ~ User ~ findById ~ error:", error);
-      throw error;
-    }
-  }
+  // static async findByUsername(username: string) {
+  //   try {
+  //     return await User.collection.findOne({ username });
+  //   } catch (error) {
+  //     console.log("🚀 ~ User ~ findById ~ error:", error);
+  //     throw error;
+  //   }
+  // }
 
-  static async findByEmail(email: string) {
+  static async findByEmailUsername(email: string, username?: string) {
     try {
-      return await User.collection.findOne({ email });
+      return await User.collection.findOne({ $or: [{ email }, { username }] });
     } catch (error) {
       console.log("🚀 ~ User ~ findById ~ error:", error);
       throw error;

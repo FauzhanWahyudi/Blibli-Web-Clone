@@ -14,10 +14,7 @@ export async function POST(request: Request) {
 
     const { username, email } = body;
 
-    let user = await User.findByUsername(username);
-    if (user) throw new HttpError("Username must be unique", 422);
-
-    user = await User.findByEmail(email);
+    const user = await User.findByEmailUsername(email, username);
     if (user) throw new HttpError("Email must be unique", 422);
 
     const newUser = await User.register(body);
