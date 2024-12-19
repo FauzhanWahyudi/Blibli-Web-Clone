@@ -12,9 +12,24 @@ export default class Product {
     return products;
   }
 
-  static async findAll() {
+  static async findAll(search?: string, limit?: number, page?: number) {
     try {
-      return Product.collection.find().sort({ createdAt: -1 }).toArray();
+      search = search ? search : "";
+      const currLimit = limit ? limit : 10;
+      const currPage = page && page > 1 ? page - 1 : 0;
+      const offset = currLimit * currPage;
+      const products = await Product.collection
+        .find({
+          $or: [
+            { name: { $regex: search } },
+            { description: { $regex: search } },
+          ],
+        })
+        .limit(limit || 5)
+        .skip(offset)
+        .sort({ createdAt: -1 })
+        .toArray();
+      return { products, limit, page };
     } catch (error) {
       console.log("🚀 ~ Product ~ findById ~ error:", error);
       throw error;

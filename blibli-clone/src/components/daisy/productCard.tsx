@@ -33,7 +33,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
         >
           Product Detail
         </Link>
-        <WishButton productId={String(product._id)} />{" "}
+        <WishButton productId={String(product._id)} />
       </div>
     </div>
   );
