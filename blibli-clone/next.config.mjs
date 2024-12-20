@@ -16,6 +16,13 @@ const nextConfig = {
         pathname: "/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "www.static-src.com",
+        port: "",
+        pathname: "/siva/asset/12_2024/**",
+        search: "",
+      },
     ],
   },
 };
