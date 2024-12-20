@@ -24,22 +24,20 @@ export default function ProductsPage() {
       },
     );
     const { products } = (await response.json()) as { products: IProduct[] };
-    console.log(products);
+    // console.log(products);
     if (products.length === 1) {
       setHasMore(false);
     }
     if (products.length === 0) {
-      console.log(page);
+      // console.log(page);
       // no data fetched
       setHasMore(false);
     } else {
-      setTimeout(() => {
-        // concat new with previous data
-        setProducts((prevProducts) =>
-          pageNum === 1 ? products : [...prevProducts, ...products],
-        );
-        setPage((prevPage) => prevPage + 1);
-      }, 500);
+      // concat new with previous data
+      setProducts((prevProducts) =>
+        pageNum === 1 ? products : [...prevProducts, ...products],
+      );
+      setPage((prevPage) => prevPage + 1);
     }
     setIsSearching(false);
     // return products;

@@ -13,7 +13,7 @@ export default async function middleware(request: NextRequest) {
       throw new HttpError("Invalid Token", 401);
     }
     const { value } = authCookies;
-    console.log("value", value);
+    // console.log("value", value);
 
     const [type, token] = value.split(" ");
     if (type.toLowerCase() !== "bearer") {

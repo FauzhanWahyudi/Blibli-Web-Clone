@@ -90,9 +90,6 @@ export function WishButton({
           });
         }
         await revalidateByPath("/(main)/products/[slug]", "layout");
-        // await revalidateByTag("product-" + slug);
-
-        router.push("/products/" + slug);
       });
   };
   return (

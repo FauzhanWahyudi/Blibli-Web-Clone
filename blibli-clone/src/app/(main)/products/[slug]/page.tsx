@@ -48,7 +48,7 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
   const product = (await response.json()) as IProduct;
   console.log("🚀 ~ ProductDetailPage ~ product:", product.wishlist);
   return (
-    <div>
+    <div className="relative">
       <div className="breadcrumbs w-full text-sm">
         <ul>
           <li>
@@ -149,47 +149,51 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
           </div>
         </div>
       </main>
-      <aside className="relative bottom-0 mt-4 w-full">
-        <div className="card w-full bg-slate-200 shadow-2xl">
-          <div className="flex items-center justify-between gap-8 px-5 py-2">
-            <div className="flex items-center gap-4">
-              <div className="avatar">
-                <div className="mask mask-squircle w-12">
-                  <Image
-                    src={product.thumbnail}
-                    alt="thumbnail"
-                    width={500}
-                    height={500}
-                  />
+      <aside className="fixed bottom-0 left-0 z-10 mt-4 w-lvw bg-slate-100 shadow-inner">
+        <div className="m-auto w-1/2">
+          <div className="card w-full">
+            <div className="flex items-center justify-between gap-8 px-5 py-2">
+              <div className="flex items-center gap-4">
+                <div className="avatar">
+                  <div className="mask mask-squircle w-12">
+                    <Image
+                      src={product.thumbnail}
+                      alt="thumbnail"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                </div>
+                <p>
+                  {product.name} - {product.slug.split("-")[0]}
+                </p>
+              </div>
+              <div>
+                <div>
+                  <p>Total Harga:</p>
+                  <p className="font-bold">{rupiah(product.price)}</p>
                 </div>
               </div>
-              <p>{product.name}</p>
-            </div>
-            <div>
-              <div>
-                <p>Total Harga:</p>
-                <p className="font-bold">{rupiah(product.price)}</p>
+              <div className="flex items-center gap-2">
+                <button className="btn btn-outline btn-primary rounded-full">
+                  Buy Now
+                </button>
+                <button className="btn btn-primary rounded-full">
+                  Add to Cart
+                </button>
+                {product.wishlist && product.wishlist.length > 0 ? (
+                  <Link href={"/wishlist"}>
+                    <FaHeart className="text-3xl text-red-700" />
+                  </Link>
+                ) : (
+                  <WishButton
+                    type="add"
+                    slug={product.slug}
+                    productId={String(product._id)}
+                  />
+                )}
+                {/* <WishButton productId={String(product._id)} /> */}
               </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="btn btn-outline btn-primary rounded-full">
-                Buy Now
-              </button>
-              <button className="btn btn-primary rounded-full">
-                Add to Cart
-              </button>
-              {product.wishlist && product.wishlist.length > 0 ? (
-                <Link href={"/wishlist"}>
-                  <FaHeart className="text-3xl text-red-700" />
-                </Link>
-              ) : (
-                <WishButton
-                  type="add"
-                  slug={product.slug}
-                  productId={String(product._id)}
-                />
-              )}
-              {/* <WishButton productId={String(product._id)} /> */}
             </div>
           </div>
         </div>

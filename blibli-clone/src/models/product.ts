@@ -42,6 +42,14 @@ export default class Product {
               createdAt: -1,
             },
           },
+          {
+            $lookup: {
+              from: "wishlist",
+              localField: "_id",
+              foreignField: "productId",
+              as: "wishlist",
+            },
+          },
         ])
         .toArray();
       // .find({

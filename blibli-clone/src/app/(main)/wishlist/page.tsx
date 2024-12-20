@@ -48,6 +48,11 @@ export default function WishList() {
             </thead>
             <tbody>
               {/* looping wishlist */}
+              {wishlist.length === 0 && (
+                <h1 className="text-center text-5xl font-extrabold uppercase">
+                  You have no wish in the list
+                </h1>
+              )}
               {wishlist.map((wish) => {
                 return (
                   <tr key={wish._id?.toString()}>

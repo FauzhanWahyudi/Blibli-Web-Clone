@@ -61,7 +61,7 @@ export default function LoginPage() {
         timer: 2500,
       });
     } else {
-      console.log("aaaaaaaaa", data);
+      // console.log("aaaaaaaaa", data);
       await revalidateByPath("/", "layout");
       router.push("/");
     }
