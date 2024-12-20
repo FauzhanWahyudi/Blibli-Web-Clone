@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import errorHandler from "@/helpers/error";
 import Product from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";

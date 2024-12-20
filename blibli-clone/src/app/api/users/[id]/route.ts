@@ -1,5 +1,6 @@
 // path: /api/users/:id
 //location: /src/app/api/users/[id]/route.ts
+export const dynamic = "force-dynamic";
 
 import User from "@/models/user";
 import { ObjectId } from "mongodb";

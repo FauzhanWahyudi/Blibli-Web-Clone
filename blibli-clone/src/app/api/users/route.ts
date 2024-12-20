@@ -1,5 +1,6 @@
 // path: /api/users
 //location: /src/app/api/users/route.ts
+export const dynamic = "force-dynamic";
 
 import errorHandler from "@/helpers/error";
 import User from "@/models/user";

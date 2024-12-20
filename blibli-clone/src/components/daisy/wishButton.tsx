@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { useRouter } from "next/navigation";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaDeleteLeft } from "react-icons/fa6";
@@ -32,6 +33,14 @@ export function WishButton({
     const responseJson = await response.json();
 
     if (!response.ok) {
+      if (responseJson.message === "Wish already registered") {
+        return swalWithDaisyButtons.fire({
+          title: "Error!",
+          text: responseJson.message,
+          icon: "error",
+          confirmButtonText: "Oke",
+        });
+      }
       return swalWithDaisyButtons
         .fire({
           title: "Error!",
@@ -48,7 +57,8 @@ export function WishButton({
       text: "Your wish added.",
       icon: "success",
     });
-    await revalidateByPath("/products/[slug]", "layout");
+    await revalidateByPath("/(main)/products/[slug]", "layout");
+    // await revalidateByTag("product-" + slug);
     router.push("/wishlist");
   };
 
@@ -79,7 +89,9 @@ export function WishButton({
             fetchWishList?.();
           });
         }
-        await revalidateByPath("/products/[slug]", "layout");
+        await revalidateByPath("/(main)/products/[slug]", "layout");
+        // await revalidateByTag("product-" + slug);
+
         router.push("/products/" + slug);
       });
   };

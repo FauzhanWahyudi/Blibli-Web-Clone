@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import errorHandler, { HttpError } from "@/helpers/error";
 import WishList from "@/models/wishlist";
 import { ObjectId } from "mongodb";

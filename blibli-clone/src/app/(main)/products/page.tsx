@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import ProductCard from "@/components/daisy/productCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { IProduct } from "@/interfaces/product";

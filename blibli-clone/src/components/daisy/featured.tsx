@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import ProductCard from "./productCard";
 import Link from "next/link";

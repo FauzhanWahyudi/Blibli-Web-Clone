@@ -11,5 +11,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Protected>{children} </Protected>;
+  return <Protected>{children}</Protected>;
 }

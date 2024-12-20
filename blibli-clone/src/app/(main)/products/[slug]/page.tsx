@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { WishButton } from "@/components/daisy/wishButton";
 import { rupiah } from "@/helpers/rupiah";
 import { IProduct } from "@/interfaces/product";
@@ -39,6 +40,9 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/detail/${slug}`,
     {
       method: "GET",
+      // next: {
+      //   tags: ["product-" + slug],
+      // },
     },
   );
   const product = (await response.json()) as IProduct;

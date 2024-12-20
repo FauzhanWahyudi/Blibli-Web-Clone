@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import errorHandler from "@/helpers/error";
 import User from "@/models/user";
 import { cookies } from "next/headers";
