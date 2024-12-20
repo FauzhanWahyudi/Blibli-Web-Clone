@@ -3,7 +3,6 @@ import bliLogo from "@/assets/logo-blibli-blue.0f340eba.svg";
 import { FaCartShopping } from "react-icons/fa6";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import SearchBar from "./search";
 export default function Navbar() {
