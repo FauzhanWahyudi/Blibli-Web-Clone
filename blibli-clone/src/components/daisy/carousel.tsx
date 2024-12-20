@@ -18,7 +18,7 @@ export default function Carousel() {
         >
           <Image
             width={1800}
-            height={600}
+            height={500}
             src={link}
             alt={"bannner" + index}
             className="w-11/12"
