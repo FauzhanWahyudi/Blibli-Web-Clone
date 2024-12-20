@@ -59,25 +59,94 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
           </li>
         </ul>
       </div>
-      <main className="flex w-full justify-between">
-        <div className="w-3/6">
-          <Image
-            src={product.thumbnail}
-            alt="thumbnail"
-            width={500}
-            height={500}
-          />
+      <main className="flex w-full justify-between px-4">
+        <div className="w-3/6 flex-col items-center">
+          <div className="carousel">
+            <div
+              id="item1"
+              className="carousel-item flex w-full justify-center"
+            >
+              <Image
+                src={product.thumbnail}
+                alt="thumbnail"
+                width={500}
+                height={500}
+                className="mask mask-squircle"
+              />
+            </div>
+            {product.images.map((image, index) => (
+              <div
+                key={index}
+                className="carousel-item flex w-full justify-center"
+                id={`item${index + 1}`}
+              >
+                <Image
+                  src={image}
+                  alt={product.name}
+                  width={500}
+                  height={500}
+                  className="mask mask-squircle"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="m-auto mt-3 flex w-5/6 flex-wrap justify-center gap-4">
+            <Link
+              href="#item1"
+              className="object-cover hover:scale-110 hover:rounded-3xl hover:ring-4 focus:rounded-3xl focus:ring-4"
+            >
+              <Image
+                src={product.thumbnail}
+                alt="thumbnail"
+                width={60}
+                height={60}
+                className="mask mask-squircle"
+              />
+            </Link>
+            {product.images.map((image, index) => (
+              <Link
+                key={index}
+                href={"#item" + String(Number(index + 1))}
+                className="object-cover hover:scale-110 hover:rounded-3xl hover:ring-4 focus:rounded-3xl focus:ring-4"
+                id={"item" + Number(index + 1).toString()}
+              >
+                <Image
+                  src={image}
+                  alt={product.name}
+                  width={60}
+                  height={60}
+                  className="mask mask-squircle"
+                />
+              </Link>
+            ))}
+          </div>
         </div>
-        <div className="w-3/6 text-wrap">
-          <h1>{rupiah(product.price)}</h1>
-          <br />
-          <p>{product.name}</p>
-          <br />
-          <p>{product.description}</p>
-          <br />
-          <p>{product.tags}</p>
-          <br />
-          <p>{timeSince(product.createdAt?.toString() as string)}</p>
+        <div className="w-3/6">
+          <p className="text-4xl font-bold text-gray-800">
+            {rupiah(product.price)}
+          </p>
+          <p className="text-3xl font-bold text-gray-900">{product.name}</p>
+          <p className="mt-4 text-lg text-gray-500">{product.excerpt}</p>
+
+          <div className="mt-8">
+            <p className="text-2xl font-semibold text-gray-700">Description</p>
+            <p className="mt-2 text-base text-gray-600">
+              {product.description}
+            </p>
+          </div>
+
+          <div className="mt-8 flex items-center justify-between">
+            <p className="text-base font-bold text-blue-500">
+              {timeSince(product.createdAt?.toString() as string)}
+            </p>
+            <div className="flex gap-2">
+              {product?.tags.map((tag, index) => (
+                <div className="badge badge-outline text-base" key={index}>
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </main>
       <aside className="relative bottom-0 mt-4 w-full">
