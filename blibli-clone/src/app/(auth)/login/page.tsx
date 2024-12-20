@@ -61,7 +61,7 @@ export default function LoginPage() {
       });
     } else {
       console.log("aaaaaaaaa", data);
-      await revalidateByPath("/");
+      await revalidateByPath("/", "layout");
       router.push("/");
     }
   }

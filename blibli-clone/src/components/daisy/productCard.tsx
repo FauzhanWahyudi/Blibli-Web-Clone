@@ -37,7 +37,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
         {/* {product.wishlist && product.wishlist.length > 0 ? (
           <FaHeart className="text-3xl text-red-700" />
         ) : ( */}
-        <WishButton productId={String(product._id)} />
+        <WishButton type="add" productId={String(product._id)} />
         {/* )} */}
       </div>
     </div>

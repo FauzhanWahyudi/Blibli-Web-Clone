@@ -1,11 +1,10 @@
 "use client";
-import { revalidateByPath } from "@/actions/cache";
+import { WishButton } from "@/components/daisy/wishButton";
 import { rupiah } from "@/helpers/rupiah";
 import { IWishList } from "@/interfaces/wishlist";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaDeleteLeft } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
 export const swalWithDaisyButtons = Swal.mixin({
@@ -30,34 +29,6 @@ export default function WishList() {
     fetchWishList();
   }, []);
 
-  const deleteWish = async (id: string) => {
-    swalWithDaisyButtons
-      .fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "btn btn-primary",
-        cancelButtonColor: "btn btn-warning",
-        confirmButtonText: "Yes, delete it!",
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          fetch("/api/wishlist/" + id, {
-            method: "DELETE",
-          }).then(() => {
-            //success info
-            swalWithDaisyButtons.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-            fetchWishList();
-          });
-        }
-        revalidateByPath("/products");
-      });
-  };
   return (
     <div className="min-h-screen flex-1">
       <div className="overflow-x-auto">
@@ -119,14 +90,12 @@ export default function WishList() {
                       >
                         details
                       </Link>
-                      <button
-                        onClick={() =>
-                          deleteWish(wish._id?.toString() as string)
-                        }
-                        className="btn btn-ghost btn-xs text-lg hover:text-red-600"
-                      >
-                        <FaDeleteLeft />
-                      </button>
+                      <WishButton
+                        type="delete"
+                        slug={wish.product?.slug}
+                        wishId={wish._id?.toString() as string}
+                        fetchWishList={fetchWishList}
+                      />
                     </div>
                   </th>
                 </tr>

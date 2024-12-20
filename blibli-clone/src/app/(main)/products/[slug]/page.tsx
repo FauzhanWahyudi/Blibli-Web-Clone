@@ -5,16 +5,15 @@ import timeSince from "@/helpers/timeSince";
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeart } from "react-icons/fa6";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 interface ProductDetailSlug {
   params: { slug: string };
 }
 
-export async function generateMetadata(
-  { params }: ProductDetailSlug,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ProductDetailSlug): Promise<Metadata> {
   // read route params
   const { slug } = params;
   const response = await fetch(
@@ -43,7 +42,7 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
     },
   );
   const product = (await response.json()) as IProduct;
-  // console.log(product.wishlist);
+  console.log("🚀 ~ ProductDetailPage ~ product:", product.wishlist);
   return (
     <div>
       <div className="breadcrumbs w-full text-sm">
@@ -111,7 +110,11 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
                   <FaHeart className="text-3xl text-red-700" />
                 </Link>
               ) : (
-                <WishButton productId={String(product._id)} />
+                <WishButton
+                  type="add"
+                  slug={product.slug}
+                  productId={String(product._id)}
+                />
               )}
               {/* <WishButton productId={String(product._id)} /> */}
             </div>

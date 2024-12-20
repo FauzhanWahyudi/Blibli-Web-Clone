@@ -1,5 +1,5 @@
 export default function timeSince(date: string) {
-  let seconds = new Date().getSeconds() - new Date(date).getSeconds();
+  const seconds = (Date.now() - new Date(date).getTime()) / 1000;
 
   let interval = seconds / 31536000;
 

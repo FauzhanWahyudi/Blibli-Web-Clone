@@ -16,7 +16,7 @@ export default class Product {
     try {
       search = search ? search : "";
       limit = limit ? limit : 10;
-      page = page && page > 1 ? page - 1 : 0;
+      page = page ? page - 1 : 0;
       console.log(page, limit);
       const offset = limit * page;
       const products = await Product.collection
@@ -38,19 +38,10 @@ export default class Product {
             },
           },
           {
-            $lookup: {
-              from: "wishlist",
-              localField: "_id",
-              foreignField: "productId",
-              as: "wishlist",
-            },
+            $skip: offset,
           },
-
           {
             $limit: limit,
-          },
-          {
-            $skip: offset,
           },
           {
             $sort: {
@@ -102,6 +93,7 @@ export default class Product {
 
   static async findBySlug(slug: string) {
     try {
+      console.log("🚀 ~ Product ~ findBySlug ~ slug:", slug);
       const product = await Product.collection
         .aggregate([
           { $match: { slug } },
@@ -115,6 +107,7 @@ export default class Product {
           },
         ])
         .toArray();
+      console.log("🚀 ~ Product ~ findBySlug ~ product:", product[0].wishlist);
       return product[0];
     } catch (error) {
       console.log("🚀 ~ Product ~ findById ~ error:", error);

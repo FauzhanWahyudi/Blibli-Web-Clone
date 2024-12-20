@@ -15,6 +15,7 @@ export async function GET(request: Request, { params }: GetProductParams) {
     const product = await Product.findBySlug(slug);
     if (!product) throw new HttpError("Product not found", 404);
     // console.log("test");
+    console.log("🚀 ~ GET ~ product:", product);
     return NextResponse.json(product, { status: 200 });
   } catch (error) {
     console.log("🚀 ~ GET ~ error:", error);

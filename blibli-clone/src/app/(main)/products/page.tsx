@@ -27,6 +27,7 @@ export default function ProductsPage() {
       setHasMore(false);
     }
     if (products.length === 0) {
+      console.log(page);
       // no data fetched
       setHasMore(false);
     } else {
