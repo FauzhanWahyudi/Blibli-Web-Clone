@@ -1,10 +1,9 @@
 "use client";
-import { swalWithDaisyButtons } from "@/app/(main)/wishlist/page";
 import { useRouter } from "next/navigation";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { revalidateByPath } from "@/actions/cache";
-
+import { swalWithDaisyButtons } from "@/helpers/customAlert";
 export function WishButton({
   type,
   productId,

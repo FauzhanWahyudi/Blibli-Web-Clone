@@ -5,15 +5,6 @@ import { IWishList } from "@/interfaces/wishlist";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-
-export const swalWithDaisyButtons = Swal.mixin({
-  customClass: {
-    confirmButton: "btn btn-success",
-    cancelButton: "ml-4 btn btn-error",
-  },
-  buttonsStyling: false,
-});
 
 export default function WishList() {
   const [wishlist, setWishList] = useState<IWishList[]>([]);
