@@ -1,4 +1,6 @@
 "use client";
+
+export const dynamic = "force-dynamic";
 import { rupiah } from "@/helpers/rupiah";
 import { IProduct } from "@/interfaces/product";
 import Image from "next/image";
@@ -49,7 +51,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
           />
         </figure>
         <div className="card-body text-center">
-          <h2 className="card-title line-clamp-2 h-6 mb-2">{product.name}</h2>
+          <h2 className="card-title mb-2 line-clamp-2 h-6">{product.name}</h2>
           <h3>{rupiah(product.price)}</h3>
           <div className="line-clamp-2 text-left">
             <p>{product.excerpt}</p>

@@ -188,7 +188,6 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
                 ) : (
                   <WishButton
                     type="add"
-                    slug={product.slug}
                     productId={String(product._id)}
                   />
                 )}

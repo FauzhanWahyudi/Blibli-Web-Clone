@@ -1,4 +1,4 @@
-import errorHandler, { HttpError } from "@/helpers/error";
+import errorHandler from "@/helpers/error";
 import WishList from "@/models/wishlist";
 import { NextRequest, NextResponse } from "next/server";
 

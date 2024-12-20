@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic = "force-dynamic";
 import { useRouter } from "next/navigation";
 import { IoHeartOutline } from "react-icons/io5";
@@ -10,13 +11,11 @@ export function WishButton({
   productId,
   wishId,
   fetchWishList,
-  slug,
 }: {
   type: string;
   productId?: string;
   wishId?: string;
   fetchWishList?: () => void;
-  slug?: string;
 }) {
   const router = useRouter();
 

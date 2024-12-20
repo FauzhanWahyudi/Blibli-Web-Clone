@@ -104,7 +104,6 @@ export default function WishList() {
                         </Link>
                         <WishButton
                           type="delete"
-                          slug={wish.product?.slug}
                           wishId={wish._id?.toString() as string}
                           fetchWishList={fetchWishList}
                         />
