@@ -78,7 +78,7 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
               <div
                 key={index}
                 className="carousel-item flex w-full justify-center"
-                id={`item${index + 1}`}
+                id={`item${index + 2}`}
               >
                 <Image
                   src={image}
@@ -106,7 +106,7 @@ export default async function ProductDetailPage({ params }: ProductDetailSlug) {
             {product.images.map((image, index) => (
               <Link
                 key={index}
-                href={"#item" + String(Number(index + 1))}
+                href={"#item" + String(Number(index + 2))}
                 className="object-cover hover:scale-110 hover:rounded-3xl hover:ring-4 focus:rounded-3xl focus:ring-4"
                 id={"item" + Number(index + 1).toString()}
               >
