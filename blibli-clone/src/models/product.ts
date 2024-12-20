@@ -2,15 +2,9 @@ import { db } from "@/db";
 import generateExcerpt from "@/helpers/excerpt";
 import { IProduct } from "@/interfaces/product";
 import { ObjectId } from "mongodb";
-import data from "../../../db.json";
 
 export default class Product {
   static collection = db.collection<IProduct>("products");
-
-  static async dummyFindAll() {
-    const products = data.products;
-    return products;
-  }
 
   static async findAll(search?: string, page?: number, limit?: number) {
     try {
