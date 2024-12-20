@@ -1,5 +1,4 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import Product from "@/models/product";
 import ProductCard from "./productCard";
 import Link from "next/link";
 import { IProduct } from "@/interfaces/product";
