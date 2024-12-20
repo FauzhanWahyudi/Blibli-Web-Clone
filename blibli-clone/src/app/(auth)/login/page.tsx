@@ -40,13 +40,16 @@ export default function LoginPage() {
   });
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
-    const response = await fetch("/api/users/login", {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
+      {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
     const data = (await response.json()) as {
       message?: string;
       access_token?: string;

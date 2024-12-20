@@ -10,13 +10,16 @@ import { useEffect, useState } from "react";
 export default function ProductCard({ product }: { product: IProduct }) {
   const [isUserWish, setIsUserWish] = useState(false);
   const checkUserWish = async () => {
-    const response = await fetch(`http://localhost:3000/api/wishlist/check/`, {
-      method: "POST",
-      body: JSON.stringify({ productId: product._id }),
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/check/`,
+      {
+        method: "POST",
+        body: JSON.stringify({ productId: product._id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
     const { wish } = await response.json();
     if (!response.ok) {
       return false;
@@ -34,7 +37,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
     });
   }, []);
   return (
-    <div className="card h-[30rem] w-64 justify-between bg-base-100 shadow-xl">
+    <div className="card h-[33rem] w-72 justify-between bg-base-100 shadow-xl">
       <Link href={"/products/" + product.slug}>
         <figure>
           <Image
@@ -46,7 +49,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
           />
         </figure>
         <div className="card-body text-center">
-          <h2 className="card-title line-clamp-2 h-6">{product.name}</h2>
+          <h2 className="card-title line-clamp-2 h-6 mb-2">{product.name}</h2>
           <h3>{rupiah(product.price)}</h3>
           <div className="line-clamp-2 text-left">
             <p>{product.excerpt}</p>

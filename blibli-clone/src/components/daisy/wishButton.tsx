@@ -23,13 +23,16 @@ export function WishButton({
   //adder
   const wishAdder = async () => {
     // console.log("productId", productId);
-    const response = await fetch("/api/wishlist", {
-      method: "POST",
-      body: JSON.stringify({ productId }),
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist`,
+      {
+        method: "POST",
+        body: JSON.stringify({ productId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
     const responseJson = await response.json();
 
     if (!response.ok) {
@@ -76,7 +79,7 @@ export function WishButton({
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          fetch("/api/wishlist/" + id, {
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/` + id, {
             method: "DELETE",
           }).then(() => {
             //success info

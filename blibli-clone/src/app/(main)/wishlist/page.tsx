@@ -11,9 +11,12 @@ export default function WishList() {
   const [wishlist, setWishList] = useState<IWishList[]>([]);
   const [loading, isLoading] = useState(true);
   const fetchWishList = async () => {
-    const response = await fetch("/api/wishlist", {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist`,
+      {
+        method: "GET",
+      },
+    );
     const data = await response.json();
     console.log("🚀 ~ fetchWishList ~ data:", data);
     setWishList(data.wishlist);

@@ -43,13 +43,16 @@ export default function RegisterPage() {
   async function onSubmit(values: z.infer<typeof UserSchema>) {
     // console.log(values);
 
-    const response = await fetch("/api/users/register", {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/register`,
+      {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
     const data = (await response.json()) as {
       message?: string;

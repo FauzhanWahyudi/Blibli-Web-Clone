@@ -18,7 +18,7 @@ export default function ProductsPage() {
   const fetchProducts = async (search: string, pageNum: number) => {
     search = search ? encodeURIComponent(search) : "";
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/products?search=${search}&page=${pageNum}&limit=5`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/products?search=${search}&page=${pageNum}&limit=4`,
       {
         method: "GET",
       },
@@ -84,10 +84,15 @@ export default function ProductsPage() {
             </p>
           }
         >
-          <div className="flex flex-wrap items-center justify-evenly gap-x-3 gap-y-8 py-14 sm:items-start">
-            {products.map((product) => {
+          <div className="flex flex-wrap items-center justify-between gap-y-8 py-14 sm:items-start">
+            {products.map((product, index) => {
               return (
-                <ProductCard product={product} key={String(product._id)} />
+                <div
+                  key={String(product._id)}
+                  className={`${index === products.length - 1 ? "self-start" : ""}`}
+                >
+                  <ProductCard product={product} />
+                </div>
               );
             })}
           </div>
